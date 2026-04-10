@@ -1,0 +1,133 @@
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #fcf2f8;
+    color: #2d3748;
+    margin: 0;
+    padding: 0;
+}
+
+
+h1{
+    text-align: center;
+    font-weight: bold;
+}
+ .nav {
+    text-align: center;
+    
+}
+.nav p {
+    color:#4a5565;
+    font-size: clamp(14px, 2vw, 18px);
+}
+
+.botoes{
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 2vw, 20px);
+    margin-top: clamp(20px, 4vw, 40px);
+}
+.botao button {
+    text-decoration: none;
+    color: #f6339a;
+   
+    padding: clamp(12px, 2.5vw, 15px) clamp(20px, 4vw, 30px);
+    border-radius: 5px;
+    border: 1px solid #f6339a;
+    cursor: pointer;
+  
+}
+.botao button:hover {
+    background-color: #e600733a;
+}
+#todos button{
+    background-color: #f6339a;
+    color: #fff;
+   
+}
+#todos button:hover{
+    background-color: #e60073;
+}
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(20px, 4vw, 40px);
+    padding: clamp(20px, 4vw, 40px);
+}
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: clamp(200px, 30%, 300px);
+    text-align: center;
+}
+.main .img :hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+   
+}
+.main .img {
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: clamp(200px, 30%, 300px);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 0px 0px 15px 0px;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+.desc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: clamp(10px, 2vw, 15px);
+    padding: 10px;
+}
+.price {
+    color: #e60073;
+    font-weight: bold;
+    font-size: clamp(16px, 2.5vw, 20px);
+}
+.card p {
+    margin-top: clamp(10px, 2vw, 15px);
+    color: #4a5565;
+}
+.card button {
+    margin-top: clamp(15px, 3vw, 20px);
+    background-color: #f6339a;
+    color: #fff;
+    padding: clamp(10px, 2.5vw, 15px) clamp(20px, 4vw, 30px);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+.card button:hover {
+    background-color: #e60073;
+}
+
+.emcomenda  {
+    display: flex;
+    justify-content: center;
+}
+main.conteudo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(20px, 4vw, 40px);
+    padding: clamp(20px, 4vw, 40px);
+}
