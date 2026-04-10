@@ -1,0 +1,54 @@
+
+@media (max-width: 1024px) {
+    .produtos_container, .cards, .cards_contato {
+        gap: 15px;
+        padding: 15px;
+    }
+    .produto, .card {
+        max-width: 45%;
+    }
+    .card_contato {
+        max-width: 30%;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .produto, .card, .card_contato {
+        flex-basis: 48%;
+        max-width: none;
+    }
+    header {
+        padding: 20px;
+    }
+    .buton {
+        flex-direction: row;
+        width: 80%;
+        max-width: 400px;
+        gap: 10px;
+    }
+    header h1 {
+        font-size: clamp(2rem, 6vw, 3rem);
+    }
+}
+
+
+@media (max-width: 480px) {
+    .produto, .card, .card_contato {
+        flex-basis: 100%;
+    }
+    .buton {
+        flex-direction: column;
+        width: 90%;
+    }
+    main h2 {
+        font-size: clamp(1.2rem, 5vw, 2rem);
+    }
+    .historia p {
+        font-size: clamp(14px, 4vw, 16px);
+    }
+    .card_contato img {
+        width: 40px;
+    }
+}
+
