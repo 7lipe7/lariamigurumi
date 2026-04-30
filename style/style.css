@@ -23,6 +23,16 @@ header {
     text-align: center;
     padding: clamp(20px, 5vw, 40px);
 }
+
+
+header p{
+font-size: 1.3rem;
+color: #fff;
+padding: 5px;
+background-color: #00000040;
+border-radius: 10px;
+
+}
 header button {
     background-color: #f6339a;
     color: #fff;
