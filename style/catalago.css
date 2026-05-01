@@ -25,6 +25,7 @@ h1{
     justify-content: center;
     gap: clamp(10px, 2vw, 20px);
     margin-top: clamp(20px, 4vw, 40px);
+    
 }
 .botao button {
     text-decoration: none;
