@@ -24,6 +24,34 @@ header {
     padding: clamp(20px, 5vw, 40px);
 }
 
+.butonn {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    width: auto;
+    height: auto;
+  
+
+}
+.verMais {
+    background-color:#f6339a;
+    color: #fff;
+    padding: clamp(8px, 2vw, 12px) clamp(15px, 3vw, 20px);
+    cursor: pointer;
+    font-size: clamp(14px, 2vw, 16px);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    border: none;
+    font-size: 1.4rem;
+}
+.verMais:hover {
+    background-color: #e60073;
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+
 
 header p{
 font-size: 1.3rem;
