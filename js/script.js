@@ -9,9 +9,14 @@ const observer = new IntersectionObserver((entries) => {
       const img = entry.target;
       img.src = img.dataset.src;
       img.classList.add('loaded');
-      observer.unobserve(img);
+     
+     setTimeout(() => {
+   observer.unobserve(img);
+}, 1000);
     }
   });
 });
 
 imagens.forEach(img => observer.observe(img));
+
+

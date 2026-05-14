@@ -6,27 +6,33 @@ body {
     padding: 0;
 }
 
+/* ================= HEADER ================= */
 
-h1{
+h1 {
     text-align: center;
     font-weight: bold;
+    letter-spacing: 0.5px;
 }
- .nav {
+
+.nav {
     text-align: center;
-    
 }
+
 .nav p {
-    color:#4a5565;
+    color: #4a5565;
     font-size: clamp(14px, 2vw, 18px);
 }
 
-.botoes{
+/* ================= BOTÕES ================= */
+
+.botoes {
     display: flex;
     justify-content: center;
     gap: clamp(10px, 2vw, 20px);
     margin-top: clamp(20px, 4vw, 40px);
-    
+    flex-wrap: wrap;
 }
+
 .botao button {
     text-decoration: none;
     color: #f6339a;
@@ -35,25 +41,32 @@ h1{
     border: 1px solid #f6339a;
     cursor: pointer;
     font-size: clamp(12px, 4vw, 14px);
-    text-align: start;
     margin: 0 auto;
-  
+    background: transparent;
+    transition: 0.3s ease;
 }
+
 .botao button:hover {
     background-color: #e600733a;
+    transform: scale(1.05);
 }
+
+/* botão todos */
 #todos {
     display: none;
 }
 
-#todos button{
+#todos button {
     background-color: #f6339a;
     color: #fff;
-   
 }
-#todos button:hover{
+
+#todos button:hover {
     background-color: #e60073;
 }
+
+/* ================= PRODUTOS ================= */
+
 .main {
     display: flex;
     flex-wrap: wrap;
@@ -61,59 +74,57 @@ h1{
     gap: clamp(20px, 4vw, 40px);
     padding: clamp(20px, 4vw, 40px);
 }
-.card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: clamp(200px, 30%, 300px);
-    text-align: center;
-}
-.main .img :hover {
-    transform: translateY(-5px);
-    transition: transform 0.3s ease;
-   
-}
-.main .img {
-    overflow: hidden;
-    border-radius: 10px;
-}
 
-.card img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 5px;
-}
+/* CARD (único e corrigido) */
 .card {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: clamp(200px, 30%, 300px);
     text-align: center;
+    padding-bottom: 15px;
+
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 0px 0px 15px 0px;
 }
 
 .card:hover {
     transform: translateY(-8px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
+
+/* IMAGEM */
+.card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.card img:hover {
+    transform: scale(1.03);
+}
+
+/* DESCRIÇÃO */
 .desc {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: clamp(10px, 2vw, 15px);
     margin: 5px 5px;
 }
+
 .price {
     color: #e60073;
     font-weight: bold;
     font-size: clamp(16px, 2.5vw, 20px);
 }
+
 .card p {
     margin-top: clamp(10px, 2vw, 15px);
     color: #4a5565;
 }
+
+/* BOTÃO CARD */
 .card button {
     margin-top: clamp(15px, 3vw, 20px);
     background-color: #f6339a;
@@ -122,27 +133,28 @@ h1{
     border-radius: 5px;
     border: none;
     cursor: pointer;
-}
-.card button:hover {
-    background-color: #e60073;
+    transition: 0.3s ease;
 }
 
-.emcomenda  {
+.card button:hover {
+    background-color: #e60073;
+    transform: scale(1.05);
+}
+
+/* encomenda */
+.emcomenda {
     display: flex;
     justify-content: center;
 }
-main.conteudo {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(20px, 4vw, 40px);
-    padding: clamp(20px, 4vw, 40px);
-}
+
+/* ================= VOLTAR ================= */
+
 .voltar {
     display: flex;
     justify-content: start;
     margin-top: clamp(20px, 4vw, 40px);
 }
+
 .voltar button {
     background-color: #f6339a;
     color: #fff;
@@ -153,49 +165,56 @@ main.conteudo {
     margin: 10px;
 }
 
+/* ================= LAZY LOAD ================= */
+
 .lazy {
-  opacity: 0;
-  transition: opacity 0.5s;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .lazy.loaded {
-  opacity: 1;
+    opacity: 1;
+    transform: scale(1);
 }
 
-footer{
-    background-color: #000000;
+/* ================= FOOTER ================= */
+
+footer {
+    background-color: #000;
     color: #fff;
     text-align: center;
-    padding: 10px;
+    padding: 20px;
+    margin-top: 40px;
 }
+
 footer p {
     margin: 0 auto;
-    text-align: center;
     max-width: 90vw;
     margin-top: 10px;
     padding: 1%;
 }
-footer h2{
-    text-align: center;
 
+footer h2 {
+    text-align: center;
 }
+
 hr {
     border: none;
     border-top: 1px solid #fff;
     margin: 10px auto;
     width: 80%;
 }
-footer a{
+
+footer a {
     color: #fff;
     text-decoration: none;
-    
 }
-footer a:hover{
+
+footer a:hover {
     text-decoration: underline;
 }
 
-
 footer span {
     font-size: clamp(12px, 2vw, 14px);
-    margin-top: 5px;
 }
