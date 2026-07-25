@@ -1,0 +1,1 @@
+Aplicação desenvolvida para apresentar produtos artesanais no estilo amigurumi, com foco em um design visual atrativo e navegação simples. O projeto destaca habilidades em criação de interfaces modernas e organização de conteúdo para pequenos negócios.
