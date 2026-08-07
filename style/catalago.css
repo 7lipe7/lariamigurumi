@@ -16,11 +16,144 @@ h1 {
 
 .nav {
     text-align: center;
+    padding-top: 70px; /* espaço para o hambúrguer fixo no topo */
 }
 
 .nav p {
     color: #4a5565;
     font-size: clamp(14px, 2vw, 18px);
+}
+
+/* ================= MENU / HAMBÚRGUER / SIDEBAR ================= */
+
+/* Botão hambúrguer fixo */
+.hamburger {
+    position: fixed;
+    top: 15px;
+    left: 05%;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    background-color: #f6339a;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.ativo span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+.hamburger.ativo span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.ativo span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+.hamburger:hover {
+    background-color: #e60073;
+}
+
+/* Overlay escuro atrás da sidebar */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1002;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.aberto {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Sidebar que desliza da esquerda */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(300px, 85vw);
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1003;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.sidebar.aberto {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.sidebar-header h2 {
+    font-size: 1.2rem;
+    color: #2d3748;
+}
+
+.btn-fechar {
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    color: #e60073;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.btn-fechar:hover {
+    transform: rotate(90deg);
+}
+
+.sidebar .botoes {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 0;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+.sidebar .botoes .botao {
+    width: 100%;
+}
+
+.sidebar .botoes .botao button {
+    width: 100%;
+    margin: 0;
+}
+
+.sidebar .btn-voltar-menu {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
 }
 
 /* ================= BOTÕES ================= */
@@ -29,7 +162,7 @@ h1 {
     display: flex;
     justify-content: center;
     gap: clamp(10px, 2vw, 20px);
-    margin-top: clamp(20px, 4vw, 40px);
+    margin-top: clamp(15px, 2vw, 20px);
     flex-wrap: wrap;
 }
 
@@ -51,6 +184,24 @@ h1 {
     transform: scale(1.05);
 }
 
+/* botão voltar dentro do menu */
+.botao .btn-voltar-menu {
+    display: inline-block;
+    color: #fff;
+    background-color: #f6339a;
+    border: 1px solid #f6339a;
+    padding: clamp(12px, 2.5vw, 15px) clamp(20px, 4vw, 30px);
+    border-radius: 5px;
+    font-size: clamp(12px, 4vw, 14px);
+    margin: 0 auto;
+    transition: 0.3s ease;
+}
+
+.botao .btn-voltar-menu:hover {
+    background-color: #e60073;
+    transform: scale(1.05);
+}
+
 /* botão todos */
 #todos {
     display: none;
@@ -58,7 +209,7 @@ h1 {
 
 #todos button {
     background-color: #f6339a;
-    color: #fff;
+    color: #000000;
 }
 
 #todos button:hover {
@@ -125,10 +276,12 @@ h1 {
 }
 
 /* BOTÃO CARD */
-.card button {
+.card .btn {
+    display: inline-block;
     margin-top: clamp(15px, 3vw, 20px);
     background-color: #f6339a;
     color: #fff;
+    text-decoration: none;
     padding: clamp(10px, 2.5vw, 15px) clamp(20px, 4vw, 30px);
     border-radius: 5px;
     border: none;
@@ -136,7 +289,7 @@ h1 {
     transition: 0.3s ease;
 }
 
-.card button:hover {
+.card .btn:hover {
     background-color: #e60073;
     transform: scale(1.05);
 }
@@ -145,24 +298,6 @@ h1 {
 .emcomenda {
     display: flex;
     justify-content: center;
-}
-
-/* ================= VOLTAR ================= */
-
-.voltar {
-    display: flex;
-    justify-content: start;
-    margin-top: clamp(20px, 4vw, 40px);
-}
-
-.voltar button {
-    background-color: #f6339a;
-    color: #fff;
-    padding: clamp(10px, 2.5vw, 15px) clamp(20px, 4vw, 30px);
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
 }
 
 /* ================= LAZY LOAD ================= */

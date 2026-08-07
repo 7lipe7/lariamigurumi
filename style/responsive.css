@@ -10,6 +10,9 @@
     .card_contato {
         max-width: 30%;
     }
+    .hamburger{
+        left: 100%;
+    }
     
 }
 
@@ -36,6 +39,9 @@
     justify-content: center; 
     margin: 0 auto;
 }
+ .hamburger{
+            left: 05%;
+    }
      
 }
 
@@ -57,32 +63,22 @@
     .card_contato img {
         width: 40px;
     }
-    .botoes  {
+.butonn {
         display: flex;
-        width: 100%;
-       
-       }
-       .botoes .botao button {
-
-        width: 87px;
-        text-align: center;
         justify-content: center;
-         padding: 5px;
-         margin: 0 auto;
-         font-size: 0.7rem;
-         font-weight: 300;
-         
-       }
-       #card {
+        margin: 0 auto;
+    }
+
+    /* Sidebar ocupa mais largura no mobile */
+    .sidebar {
+        width: 85vw;
+    }
+    #card {
         width: 80%;
-       }
-
-       .butonn {
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-
-}
+    }
+    .hamburger{
+            left: 05%;
+    }
 }
 
 
