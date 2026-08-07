@@ -4,28 +4,44 @@
 const botoesFiltro = document.querySelectorAll(".botoes .botao");
 const cards = document.querySelectorAll(".card[data-categoria]");
 
+// Campo de busca e mensagem de "sem resultados"
+const buscaInput = document.getElementById("busca");
+const semResultados = document.getElementById("sem-resultados");
+
 // Remove o botão "Todos" para retornar ao estado inicial da página
 const botaoTodos = document.querySelector('[data-filtro="todos"]');
 if (botaoTodos) {
     botaoTodos.style.display = "none";
 }
 
+// Categoria ativa atual (começa como "todos")
+let categoriaAtiva = "todos";
+
 function filtrar(categoria) {
     let algumVisivel = false;
+    const termo = (buscaInput ? buscaInput.value : "").trim().toLowerCase();
 
     cards.forEach((card) => {
         const categoriasCard = (card.dataset.categoria || "").split(" ");
+        const nome = (card.querySelector("h3")?.textContent || "").toLowerCase();
 
         // Mostra o card se for "todos" ou se a categoria estiver presente
         const pertence = categoria === "todos" || categoriasCard.includes(categoria);
+        // Verifica se o nome do produto contém o termo buscado
+        const correspondeBusca = termo === "" || nome.includes(termo);
 
-        if (pertence) {
+        if (pertence && correspondeBusca) {
             card.style.display = "block";
             algumVisivel = true;
         } else {
             card.style.display = "none";
         }
     });
+
+    // Mostra mensagem de "sem resultados" quando nada é encontrado
+    if (semResultados) {
+        semResultados.classList.toggle("visivel", !algumVisivel);
+    }
 
     // Mostra o botão "Todos" somente quando um filtro está ativo
     if (botaoTodos) {
@@ -38,12 +54,21 @@ botoesFiltro.forEach((botao) => {
         const categoria = botao.dataset.filtro;
         if (!categoria) return; // ignora botões sem filtro (ex: "Voltar")
 
+        categoriaAtiva = categoria;
         filtrar(categoria);
 
         // Fecha a sidebar após escolher uma categoria
         fecharSidebar();
     });
 });
+
+// ================== BUSCA POR NOME ==================
+
+if (buscaInput) {
+    buscaInput.addEventListener("input", () => {
+        filtrar(categoriaAtiva);
+    });
+}
 
 // ================== BOTÃO HAMBÚRGUER / SIDEBAR ==================
 
