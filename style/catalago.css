@@ -220,7 +220,7 @@ h1 {
     border-radius: 5px;
     border: 1px solid #f6339a;
     cursor: pointer;
-    font-size: clamp(12px, 4vw, 14px);
+    
     margin: 0 auto;
     background: transparent;
     transition: 0.3s ease;
@@ -231,23 +231,10 @@ h1 {
     transform: scale(1.05);
 }
 
-/* botão voltar dentro do menu */
-.botao .btn-voltar-menu {
-    display: inline-block;
-    color: #fff;
-    background-color: #f6339a;
-    border: 1px solid #f6339a;
-    padding: clamp(12px, 2.5vw, 15px) clamp(20px, 4vw, 30px);
-    border-radius: 5px;
-    font-size: clamp(12px, 4vw, 14px);
-    margin: 0 auto;
-    transition: 0.3s ease;
-}
 
-.botao .btn-voltar-menu:hover {
-    background-color: #e60073;
-    transform: scale(1.05);
-}
+
+
+
 
 /* botão todos */
 #todos {
@@ -399,4 +386,20 @@ footer a:hover {
 
 footer span {
     font-size: clamp(12px, 2vw, 14px);
+}
+#btn-voltar{
+    text-decoration: none;
+    border: 1px solid #e60073;
+    padding: 10px;
+    border-radius: 5px;
+    color: #e60073;
+}
+#btn-voltar:hover {
+  
+    border: 1px solid #e60073;
+    transition: 0.5s;
+transform: scale(1.05);
+    color: #ff148a;
+    background-color: #ff008038;
+    
 }
