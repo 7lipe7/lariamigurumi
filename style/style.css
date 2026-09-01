@@ -11,7 +11,7 @@ body {
     font-size: clamp(14px, 2vw, 16px);
 }
 header {
-    background-image: url("../img/Pelúcias de crochê em prateleira decorada.png");
+    background-image: url("../img/icon/fundo-prateleira.png");
     background-size: cover;
     background-position: center;
     min-height: 100vh;
