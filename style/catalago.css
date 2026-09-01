@@ -328,12 +328,6 @@ h1 {
     transform: scale(1.05);
 }
 
-/* encomenda */
-.emcomenda {
-    display: flex;
-    justify-content: center;
-}
-
 /* ================= LAZY LOAD ================= */
 
 .lazy {

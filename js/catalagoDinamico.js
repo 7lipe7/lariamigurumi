@@ -1,20 +1,5 @@
-// Configuração vem de js/config.js (variáveis de ambiente do site estático).
-// js/config.js NÃO é versionado — copie js/config.example.js para criar o seu.
-const ENV = window.ENV || {};
-const SUPABASE_URL = ENV.SUPABASE_URL;
-const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY;
-const CONFIG_OK = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
-if (!CONFIG_OK) {
-    console.warn("Supabase não configurado: copie js/config.example.js para js/config.js e preencha.");
-}
-const WHATSAPP_NUMERO = "5519998223884";
-const IMAGEM_PLACEHOLDER = "img/icon/capivara.png";
-
-function escapar(texto) {
-    return String(texto ?? "")
-        .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
-}
+// Catálogo dinâmico: produtos NÃO-destaque cadastrados no painel adm (Supabase).
+// Depende de js/comum.js (ENV, escapar, formatarPreco, linkWhatsapp, lazy load).
 
 // Mapeia as categorias do adm para os filtros da sidebar (data-filtro)
 function classeCategoria(categoria) {
@@ -26,16 +11,6 @@ function classeCategoria(categoria) {
     if (c.startsWith("cacto")) return "cactos";
     // personalisado, chaveiros e demais ficam em "especial"
     return "especial";
-}
-
-function formatarPreco(preco) {
-    const numero = Number(preco);
-    return Number.isFinite(numero) ? "R$ " + numero.toFixed(2).replace(".", ",") : "";
-}
-
-function linkWhatsapp(nome) {
-    const texto = encodeURIComponent("ola gostaria de saber mais sobre o amigurumi de " + String(nome || "").toLowerCase());
-    return "https://wa.me/" + WHATSAPP_NUMERO + "?text=" + texto;
 }
 
 function criarCard(p) {
@@ -55,10 +30,10 @@ function criarCard(p) {
 }
 
 async function carregarProdutos() {
-    if (!CONFIG_OK) return; // mantém o catálogo estático sem config
+    if (!CONFIG_OK) return; // sem config: sem catálogo dinâmico
     try {
         const url = SUPABASE_URL +
-            "/rest/v1/produtos?select=id,nome,descricao,preco,categoria,status,destaque,imagem_url" +
+            "/rest/v1/produtos?select=id,nome,descricao,preco,categoria,status,imagem_url" +
             "&destaque=eq.false&status=neq.Esgotado&order=id.desc";
 
         const resposta = await fetch(url, {
@@ -67,19 +42,22 @@ async function carregarProdutos() {
         if (!resposta.ok) throw new Error("HTTP " + resposta.status);
 
         const produtos = await resposta.json();
-        if (!Array.isArray(produtos) || produtos.length === 0) return; 
-
         const main = document.querySelector(".main");
         if (!main) return;
 
-        // remove apenas os cards estáticos, preservando o aviso "sem-resultados"
+        // remove eventuais cards estáticos antigos, preservando o aviso
         main.querySelectorAll(".card").forEach((card) => card.remove());
-        main.insertAdjacentHTML("afterbegin", produtos.map(criarCard).join(""));
 
-
-        if (typeof window.observarImagens === "function") window.observarImagens();
+        if (Array.isArray(produtos) && produtos.length > 0) {
+            main.insertAdjacentHTML("afterbegin", produtos.map(criarCard).join(""));
+            window.observarLazyImagens();
+        } else {
+            // nenhum produto disponível: mostra o aviso
+            const aviso = document.getElementById("sem-resultados");
+            if (aviso) aviso.style.display = "block";
+        }
     } catch (erro) {
-        console.warn("Catálogo dinâmico indisponível, mantendo catálogo estático.", erro);
+        console.warn("Catálogo dinâmico indisponível.", erro);
     }
 }
 

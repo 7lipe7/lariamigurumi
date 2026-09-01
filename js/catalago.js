@@ -69,20 +69,5 @@ if (busca) {
     busca.addEventListener("input", aplicarFiltros);
 }
 
+// O lazy loading das imagens fica no js/comum.js (compartilhado com o catálogo dinâmico)
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.classList.add("loaded");
-            observer.unobserve(img);
-        }
-    });
-});
-
-function observarImagens() {
-    document.querySelectorAll("img.lazy:not([src])").forEach((img) => observer.observe(img));
-}
-observarImagens();
-window.observarImagens = observarImagens; // usado pelo catálogo dinâmico
