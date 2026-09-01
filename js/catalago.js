@@ -1,139 +1,88 @@
-// ================== FILTRO DE CATEGORIAS ==================
-
-// Seleciona todos os botões de filtro e todos os cards de produtos
-const botoesFiltro = document.querySelectorAll(".botoes .botao");
-const cards = document.querySelectorAll(".card[data-categoria]");
-
-// Campo de busca e mensagem de "sem resultados"
-const buscaInput = document.getElementById("busca");
-const semResultados = document.getElementById("sem-resultados");
-
-// Remove o botão "Todos" para retornar ao estado inicial da página
-const botaoTodos = document.querySelector('[data-filtro="todos"]');
-if (botaoTodos) {
-    botaoTodos.style.display = "none";
-}
-
-// Categoria ativa atual (começa como "todos")
-let categoriaAtiva = "todos";
-
-function filtrar(categoria) {
-    let algumVisivel = false;
-    const termo = (buscaInput ? buscaInput.value : "").trim().toLowerCase();
-
-    cards.forEach((card) => {
-        const categoriasCard = (card.dataset.categoria || "").split(" ");
-        const nome = (card.querySelector("h3")?.textContent || "").toLowerCase();
-
-        // Mostra o card se for "todos" ou se a categoria estiver presente
-        const pertence = categoria === "todos" || categoriasCard.includes(categoria);
-        // Verifica se o nome do produto contém o termo buscado
-        const correspondeBusca = termo === "" || nome.includes(termo);
-
-        if (pertence && correspondeBusca) {
-            card.style.display = "block";
-            algumVisivel = true;
-        } else {
-            card.style.display = "none";
-        }
-    });
-
-    // Mostra mensagem de "sem resultados" quando nada é encontrado
-    if (semResultados) {
-        semResultados.classList.toggle("visivel", !algumVisivel);
-    }
-
-    // Mostra o botão "Todos" somente quando um filtro está ativo
-    if (botaoTodos) {
-        botaoTodos.style.display = categoria === "todos" ? "none" : "flex";
-    }
-}
-
-botoesFiltro.forEach((botao) => {
-    botao.addEventListener("click", () => {
-        const categoria = botao.dataset.filtro;
-        if (!categoria) return; // ignora botões sem filtro (ex: "Voltar")
-
-        categoriaAtiva = categoria;
-        filtrar(categoria);
-
-        // Fecha a sidebar após escolher uma categoria
-        fecharSidebar();
-    });
-});
-
-// ================== BUSCA POR NOME ==================
-
-if (buscaInput) {
-    buscaInput.addEventListener("input", () => {
-        filtrar(categoriaAtiva);
-    });
-}
-
-// ================== BOTÃO HAMBÚRGUER / SIDEBAR ==================
-
+// ===== Sidebar (menu de categorias) =====
 const hamburger = document.getElementById("hamburger");
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const btnFechar = document.getElementById("btn-fechar");
+const busca = document.getElementById("busca");
+const avisoSemResultados = document.getElementById("sem-resultados");
 
-function abrirSidebar() {
-    if (!sidebar || !overlay || !hamburger) return;
-    sidebar.classList.add("aberto");
-    sidebar.setAttribute("aria-hidden", "false");
-    overlay.classList.add("aberto");
-    hamburger.classList.add("ativo");
-    hamburger.setAttribute("aria-expanded", "true");
+function alternarSidebar(abrir) {
+    const aberto = abrir ?? !sidebar.classList.contains("aberto");
+    sidebar.classList.toggle("aberto", aberto);
+    overlay.classList.toggle("aberto", aberto);
+    hamburger.classList.toggle("ativo", aberto);
+    sidebar.setAttribute("aria-hidden", String(!aberto));
+    hamburger.setAttribute("aria-expanded", String(aberto));
 }
 
-function fecharSidebar() {
-    if (!sidebar || !overlay || !hamburger) return;
-    sidebar.classList.remove("aberto");
-    sidebar.setAttribute("aria-hidden", "true");
-    overlay.classList.remove("aberto");
-    hamburger.classList.remove("ativo");
-    hamburger.setAttribute("aria-expanded", "false");
+hamburger.addEventListener("click", () => alternarSidebar());
+btnFechar.addEventListener("click", () => alternarSidebar(false));
+overlay.addEventListener("click", () => alternarSidebar(false));
+document.addEventListener("keydown", (evento) => {
+    if (evento.key === "Escape") alternarSidebar(false);
+});
+
+// ===== Busca e filtros por categoria =====
+let filtroAtual = "todos";
+
+// remove acentos e deixa minúsculo para a busca ignorar diferenças
+const normalizar = (texto) =>
+    String(texto || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+function produtoVisivel(card) {
+    const termo = normalizar(busca.value.trim());
+    const nome = normalizar(card.querySelector("h3")?.textContent);
+    const categoria = card.dataset.categoria || "";
+
+    const casaCategoria = filtroAtual === "todos" || categoria === filtroAtual;
+    const casaBusca = !termo || nome.includes(termo);
+    return casaCategoria && casaBusca;
 }
 
-if (hamburger) {
-    hamburger.addEventListener("click", () => {
-        if (sidebar.classList.contains("aberto")) {
-            fecharSidebar();
-        } else {
-            abrirSidebar();
+function aplicarFiltros() {
+    let visiveis = 0;
+
+    document.querySelectorAll(".main .card").forEach((card) => {
+        const mostrar = produtoVisivel(card);
+        card.style.display = mostrar ? "block" : "none";
+        if (mostrar) visiveis++;
+    });
+
+    if (avisoSemResultados) {
+        avisoSemResultados.style.display = visiveis === 0 ? "block" : "none";
+    }
+}
+
+document.querySelectorAll("#botoes .botao").forEach((botao) => {
+    botao.addEventListener("click", () => {
+        filtroAtual = botao.dataset.filtro || "todos";
+
+        document.querySelectorAll("#botoes .botao").forEach((b) => b.classList.remove("selecionado"));
+        botao.classList.add("selecionado");
+
+        aplicarFiltros();
+        alternarSidebar(false); // fecha a sidebar ao escolher
+    });
+});
+
+if (busca) {
+    busca.addEventListener("input", aplicarFiltros);
+}
+
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.add("loaded");
+            observer.unobserve(img);
         }
     });
+});
+
+function observarImagens() {
+    document.querySelectorAll("img.lazy:not([src])").forEach((img) => observer.observe(img));
 }
-
-if (overlay) {
-    overlay.addEventListener("click", fecharSidebar);
-}
-
-if (btnFechar) {
-    btnFechar.addEventListener("click", fecharSidebar);
-}
-
-// ================== LAZY LOADING DAS IMAGENS ==================
-
-const imagens = document.querySelectorAll(".lazy");
-
-if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.add("loaded");
-                observer.unobserve(img);
-            }
-        });
-    });
-
-    imagens.forEach((img) => observer.observe(img));
-} else {
-    // Fallback: carrega todas as imagens direto se o navegador não suportar
-    imagens.forEach((img) => {
-        img.src = img.dataset.src;
-        img.classList.add("loaded");
-    });
-}
+observarImagens();
+window.observarImagens = observarImagens; // usado pelo catálogo dinâmico

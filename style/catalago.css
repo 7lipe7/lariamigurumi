@@ -403,3 +403,21 @@ transform: scale(1.05);
     background-color: #ff008038;
     
 }
+
+
+/* Badge para produtos "Sob encomenda" (catálogo dinâmico) */
+.badge-encomenda {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.8rem;
+    color: #ff148a;
+    background-color: #ff008038;
+    border-radius: 1rem;
+}
+/* Categoria selecionada na sidebar */
+.sidebar .botoes .botao.selecionado button {
+    color: #ff148a;
+    background-color: #ff008038;
+}
+

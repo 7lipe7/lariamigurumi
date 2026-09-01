@@ -5,15 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo Lari Amigurumi | Bonecos de Crochê</title>
-    <meta name="description" content="Explore a coleção completa de amigurumis feitos à mão: chaveiros, bonecos e animais personalizados. Encomende pelo WhatsApp!">
-    <meta name="keywords" content="amigurumi, crochê, catálogo, chaveiro, boneco, animal, personalizado, presente">
+    <meta name="description" content="Explore a coleção completa de amigurumis feitos à mão: ursinhos, coelhos, personagens, peixes, cactos e peças especiais. Encomende pelo WhatsApp!">
+    <meta name="keywords" content="amigurumi, crochê, catálogo, ursinho, coelho, personagem, peixe, cacto, personalizado, presente">
     <meta property="og:title" content="Catálogo Lari Amigurumi | Bonecos de Crochê">
     <meta property="og:description" content="Explore a coleção completa de amigurumis feitos à mão. Encomende pelo WhatsApp!">
     <meta property="og:type" content="website">
     <link rel="shortcut icon" href="img/icon/capivara.png" type="image/x-icon">
     <link rel="stylesheet" href="style/catalago.css">
     <link rel="stylesheet" href="style/responsive.css">
+    <script src="js/config.js"></script>
     <script src="js/catalago.js" defer></script>
+    <script src="js/catalagoDinamico.js" defer></script>
 </head>
 
 <body>
@@ -37,10 +39,11 @@
 
     <div class="botoes" id="botoes">
         <div class="botao" data-filtro="todos"><button>Todos</button></div>
-        <div class="botao" data-filtro="chaveiro"><button>Chaveiros</button></div>
-        <div class="botao" data-filtro="boneco"><button>Bonecos</button></div>
-        <div class="botao" data-filtro="animais"><button>Animais</button></div>
-        <div class="botao" data-filtro="personalizados"><button>Personalizados</button></div>
+        <div class="botao" data-filtro="ursinhos"><button>Ursinhos</button></div>
+        <div class="botao" data-filtro="coelhos"><button>Coelhos</button></div>
+        <div class="botao" data-filtro="personagens"><button>Personagens</button></div>
+        <div class="botao" data-filtro="peixes"><button>Peixes</button></div>
+        <div class="botao" data-filtro="especial"><button>Especial</button></div>
     </div>
     
     
@@ -69,187 +72,6 @@
 
 <div class="sem-resultados" id="sem-resultados">Nenhum produto encontrado para sua busca.</div>
 
-<!-- DINOSSAURO -->
-<div class="card boneco animais" data-categoria="boneco animais">
-    <img data-src="img/Dinosaur de crochê sobre caixa divertida.png" alt="Dinossauro amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Dinossauro Amigurumi</h3> <span class="price">R$ 100,00</span>
-    </div>
-    <p>Feito à mão com muito carinho, macio e delicado. Perfeito para decorar ou presentear alguém especial.</p>
-    <div class="emcomenda">
-        <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20dinossauro%20amigurumi" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-    </div>
-</div>
-
-<!-- HIPOPÓTAMO -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/hipopotamo.png" alt="Casal de hipopótamos amigurumi" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Casal de Hipopótamos</h3> <span class="price">R$ 120,00</span>
-    </div>
-    <p>Peça artesanal cheia de personalidade e fofura. Ideal para decoração ou presente.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20casal%20de%20hipop%C3%B3tamos" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- TARTARUGA -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/Tartaruguinha de crochê na mão.png" alt="Tartaruguinha amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Tartaruguinha Amigurumi</h3> <span class="price">R$ 80,00</span>
-    </div>
-    <p>Fofa e delicada, perfeita para decoração ou presente.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20a%20tartaruguinha%20amigurumi" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- DACHSHUND -->
-<div class="card chaveiro" data-categoria="chaveiro">
-    <img data-src="img/Chaveiros de dachshund de crochê.png" alt="Chaveiro de Dachshund de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Chaveiro Dachshund</h3> <span class="price">R$ 25,00</span>
-    </div>
-    <p>Chaveiro artesanal perfeito para quem ama cachorros.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20chaveiro%20Dachshund" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- COCO -->
-<div class="card chaveiro" data-categoria="chaveiro">
-    <img data-src="img/coco.png" alt="Chaveiro de coco de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Chaveiro de Coco</h3> <span class="price">R$ 15,00</span>
-    </div>
-    <p>Pequeno, criativo e cheio de personalidade.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20chaveiro%20de%20coco" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- GIRAFA -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/girafa.jpeg" alt="Casal de girafas amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Casal de Girafas</h3> <span class="price">R$ 25,00</span>
-    </div>
-    <p>Delicado e cheio de charme.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20casal%20de%20girafas" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- CAPIVARA -->
-<div class="card chaveiro" data-categoria="chaveiro">
-    <img data-src="img/capivara.jpeg" alt="Chaveiro de capivara de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Chaveiro Capivara</h3> <span class="price">R$ 25,00</span>
-    </div>
-    <p>Leve a fofura com você todos os dias.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20chaveiro%20de%20capivara" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- POLVO -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/polvo.jpeg" alt="Polvo amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Polvo Amigurumi</h3> <span class="price">R$ 50,00</span>
-    </div>
-    <p>Colorido e feito à mão com muito carinho.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20polvo%20amigurumi" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- FRUTAS -->
-<div class="card chaveiro" data-categoria="chaveiro">
-    <img data-src="img/frutas.jpeg" alt="Chaveiro de frutas de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Chaveiro de Frutas</h3> <span class="price">R$ 15,00</span>
-    </div>
-    <p>Perfeito para levar fofura no dia a dia.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20chaveiro%20de%20frutas" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- URSO -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/urso.jpeg" alt="Ursinho amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Ursinho Amigurumi</h3> <span class="price">R$ 100,00</span>
-    </div>
-    <p>Clássico e delicado.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20ursinho%20amigurumi" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- ZEBRA -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/zbra.jpeg" alt="Zebra amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Zebra Amigurumi</h3> <span class="price">R$ 60,00</span>
-    </div>
-    <p>Divertido e estiloso.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20a%20zebra%20amigurumi" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- MARINHEIRO -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/marinheiro.jpeg" alt="Ursinho marinheiro amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Ursinho Marinheiro</h3> <span class="price">R$ 60,00</span>
-    </div>
-    <p>Um charme náutico feito à mão.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20ursinho%20marinheiro" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- COELHO -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/coelho.jpeg" alt="Coelho amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Coelho Amigurumi</h3> <span class="price">R$ 60,00</span>
-    </div>
-    <p>Fofo e delicado.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20coelho%20amigurumi" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- COELHA -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/coelha.jpeg" alt="Coelha amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Coelha Amigurumi</h3> <span class="price">R$ 60,00</span>
-    </div>
-    <p>Perfeita para presente.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20a%20coelha%20amigurumi" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- CASAL DE COELHOS -->
-<div class="card animais" data-categoria="animais">
-    <img data-src="img/coelohoC.jpeg" alt="Casal de coelhos amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Casal de Coelhos</h3> <span class="price">R$ 120,00</span>
-    </div>
-    <p>Casal encantador.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20casal%20de%20coelhos" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- BORBOLETA -->
-<div class="card chaveiro" data-categoria="chaveiro">
-    <img data-src="img/cborboleta.jpeg" alt="Chaveiro de borboleta de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Chaveiro Borboleta</h3> <span class="price">R$ 15,00</span>
-    </div>
-    <p>Delicado e bonito.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20chaveiro%20de%20borboleta" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- STITCH -->
-<div class="card boneco" data-categoria="boneco">
-    <img data-src="img/stch.jpeg" alt="Boneco Stitch amigurumi de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Stitch Amigurumi</h3> <span class="price">R$ 65,00</span>
-    </div>
-    <p>Personagem querido em versão amigurumi.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20Stitch%20amigurumi" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
-
-<!-- EXEMPLO PERSONALIZADO -->
-<div class="card personalizados" data-categoria="personalizados">
-    <img data-src="img/cocoChaves.jpeg" alt="Amigurumi personalizado de crochê" class="lazy" loading="lazy">
-    <div class="desc">
-        <h3>Amigurumi Personalizado</h3> <span class="price">Sob consulta</span>
-    </div>
-    <p>Encomende seu personagem favorito, feito exclusivamente para você.</p>
-    <a href="https://wa.me/5519998223884?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20um%20pedido%20personalizado" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
-</div>
 
 </div>
 
