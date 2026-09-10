@@ -333,7 +333,9 @@ h1 {
 .lazy {
     opacity: 0;
     transform: scale(1.02);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    /* fundo igual ao skeleton: sem "flash" branco enquanto a foto baixa */
+    background-color: #eceff3;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .lazy.loaded {

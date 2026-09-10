@@ -39,12 +39,25 @@ if ("IntersectionObserver" in window) {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.add("loaded");
                 lazyObserver.unobserve(img);
+                carregarImagemLazy(img);
             }
         });
     });
+}
+
+// Define o src e só revela a imagem (classe .loaded) QUANDO ELA TERMINAR
+// de carregar — evita o "flash" de card branco entre o skeleton e a foto.
+function carregarImagemLazy(img) {
+    if (img.dataset.src) img.src = img.dataset.src;
+
+    if (img.complete && img.naturalWidth > 0) {
+        img.classList.add("loaded");
+        return;
+    }
+    // revela no load; no erro também revela para não ficar invisível para sempre
+    img.addEventListener("load", () => img.classList.add("loaded"), { once: true });
+    img.addEventListener("error", () => img.classList.add("loaded"), { once: true });
 }
 
 // Observa imagens com data-src ainda sem src. Pode ser chamado novamente
@@ -55,10 +68,7 @@ function observarLazyImagens() {
         imagens.forEach((img) => lazyObserver.observe(img));
     } else {
         // Fallback: navegador sem IntersectionObserver carrega tudo direto
-        imagens.forEach((img) => {
-            img.src = img.dataset.src;
-            img.classList.add("loaded");
-        });
+        imagens.forEach((img) => carregarImagemLazy(img));
     }
 }
 
