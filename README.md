@@ -9,14 +9,19 @@ Site estático (HTML/CSS/JS puro) publicado na Vercel, integrado ao painel admin
 - Imagens do Supabase Storage são carregadas otimizadas (WebP via transformação do Storage, com fallback para a original)
 - Encomendas pelo WhatsApp
 
-## Variáveis de ambiente
+## Configuração
 
-Site estático não tem `.env` em runtime: o `build.sh` gera o `js/config.js`
-(`window.ENV`) a partir das variáveis `SUPABASE_URL` e `SUPABASE_ANON_KEY`
-configuradas no dashboard da Vercel, a cada build.
+Este site **não usa arquivos de ambiente (`.env`)**. A configuração é feita assim:
 
-Para desenvolvimento local, copie `js/config.example.js` para `js/config.js` e preencha
-(`js/config.js` está no `.gitignore` e nunca é commitado).
+- **Produção (Vercel):** a cada build, o `build.sh` gera o `js/config.js`
+  (`window.ENV`) a partir das variáveis `SUPABASE_URL` e `SUPABASE_ANON_KEY`
+  configuradas no dashboard da Vercel (Settings → Environment Variables).
+- **Desenvolvimento local:** copie `js/config.example.js` para `js/config.js`
+  e preencha com os valores reais (`js/config.js` está no `.gitignore` e
+  nunca é commitado).
+
+Obs.: a chave "anon" do Supabase é pública por design — a proteção real dos
+dados é feita pelas policies de RLS no banco.
 
 ## Estrutura JS
 

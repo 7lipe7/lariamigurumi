@@ -1,3 +1,8 @@
 # Configuração local com valores reais (nunca versionar)
 js/config.js
 
+# Arquivos de ambiente locais (o projeto não usa .env, mas prevenimos commits acidentais)
+.env
+.env.*
+
+
