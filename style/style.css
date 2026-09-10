@@ -208,13 +208,48 @@ main p {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Bloco cinza com efeito shimmer (carregando) */
+.produtos_container .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: #eceff3;
+}
+
+.produtos_container .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
+
 .produtos_container .skeleton-img {
     height: 200px;
     border-radius: 5px;
 }
 
+.produtos_container .skeleton-line {
+    height: 14px;
+    border-radius: 7px;
+    margin: 14px 16px 0;
+}
+
+.produtos_container .skeleton-line.titulo {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .produtos_container .skeleton-btn {
     height: 40px;
+    width: 60%;
+    margin: 20px auto 0;
+    border-radius: 5px;
 }
 
 /* Respeita usuários que preferem menos animação */
