@@ -278,17 +278,13 @@ h1 {
 }
 
 /* IMAGEM */
+/* Sem moldura forçada: a foto aparece INTEIRA, na proporção original dela,
+   preenchendo toda a largura do card e centralizada naturalmente.
+   (moldura fixa + cover cortava o produto; contain deixava barras cinza) */
 .card img {
     display: block;
     width: 100%;
     height: auto;
-    /* moldura no formato RETRATO (3:4), igual às fotos de celular:
-       a foto preenche o card inteiro, centralizada, sem barras cinza
-       e com corte mínimo (antes: cover numa moldura paisagem cortava demais;
-       contain deixava barras laterais) */
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    object-position: center;
     border-radius: 5px 5px 0 0;
     transition: transform 0.3s ease;
 }

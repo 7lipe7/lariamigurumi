@@ -128,10 +128,7 @@ main p {
     display: block;
     width: 100%;
     height: auto;
-    /* moldura retrato 3:4, igual ao catálogo: foto preenche, centralizada */
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    object-position: center;
+    /* foto inteira, na proporção original, preenchendo o card (igual ao catálogo) */
     border-radius: 5px;
 }
 .produto h3 {
