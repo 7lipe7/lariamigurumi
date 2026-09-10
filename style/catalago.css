@@ -278,17 +278,20 @@ h1 {
 }
 
 /* IMAGEM */
-/* Sem moldura forçada: a foto aparece INTEIRA, na proporção original dela,
-   preenchendo toda a largura do card e centralizada naturalmente.
-   (moldura fixa + cover cortava o produto; contain deixava barras cinza) */
+/* Moldura única para TODOS os cards: mesma altura (420px) e mesma largura
+   (a do card). A foto aparece INTEIRA (contain), centralizada na horizontal
+   e na vertical, sobre fundo branco — mesma cor do card — então as bordas
+   nem aparecem. Nada é cortado */
 .card img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 520px;
+    object-fit: cover;
+    object-position: center;
+    background-color: #fff;
     border-radius: 5px 5px 0 0;
     transition: transform 0.3s ease;
 }
-
 .card img:hover {
     transform: scale(1.03);
 }
@@ -344,6 +347,9 @@ h1 {
 .lazy.loaded {
     opacity: 1;
     transform: scale(1);
+    /* depois de carregada, o fundo vira branco: com fotos contidas (contain),
+       as bordas somem no card em vez de aparecer como barras cinzas */
+    background-color: #fff;
 }
 
 /* ================= SKELETON LOADING ================= */
@@ -376,8 +382,7 @@ h1 {
 
 .skeleton-img {
     width: 100%;
-    height: auto;
-    aspect-ratio: 3 / 4;
+    height: 420px; /* mesma moldura das fotos reais (sem pulo de layout) */
     border-radius: 5px 5px 0 0;
 }
 

@@ -32,20 +32,16 @@ function linkWhatsapp(nome) {
     return "https://wa.me/" + WHATSAPP_NUMERO + "?text=" + texto;
 }
 
-// ===== Otimização de imagens do Supabase Storage =====
-// As fotos cadastradas no painel adm podem ser bem pesadas (PNGs de vários MB).
-// Reescrevendo para o endpoint de transformação do Storage, o servidor entrega
-// uma versão WebP leve (ex.: 2,3 MB -> 95 KB). URLs de fora do Storage voltam
-// inalteradas; se a transformação falhar, o lazy load cai para a URL original
-// (data-original) automaticamente.
+// ===== Imagens do catálogo =====
+// A conversão automática para WebP (endpoint de transformação do Supabase
+// Storage, /storage/v1/render/...) foi DESATIVADA: o recurso só existe nos
+// planos pagos do Supabase e quando indisponível deixava as fotos lentas
+// (pedido falho + fallback) ou quebradas.
+// Agora as fotos são carregadas na URL original, direto do Storage.
+// Dica: envie as fotos já redimensionadas (~100–200 KB) no painel adm para
+// o site continuar leve.
 function urlImagemOtimizada(url) {
-    const original = String(url || "");
-    const marcador = "/storage/v1/object/public/";
-    const index = original.indexOf(marcador);
-    if (index === -1) return original;
-    return original.slice(0, index) + "/storage/v1/render/image/public/" +
-        original.slice(index + marcador.length) +
-        "?width=600&quality=70&format=webp";
+    return String(url || "");
 }
 
 // ===== Lazy loading compartilhado =====
@@ -64,8 +60,7 @@ if ("IntersectionObserver" in window) {
 
 // Define o src e só revela a imagem (classe .loaded) QUANDO ELA TERMINAR
 // de carregar — evita o "flash" de card branco entre o skeleton e a foto.
-// Se a versão otimizada (data-src, WebP) falhar — por exemplo, ao estourar
-// o limite de transformações do plano — cai para a original (data-original).
+// Se o src falhar, tenta a URL original (data-original) antes de desistir.
 function carregarImagemLazy(img) {
     if (!img.dataset.src) return;
     img.src = img.dataset.src;
