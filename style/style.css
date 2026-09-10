@@ -125,9 +125,13 @@ main p {
     color: #333;
 }
 .produto img {
+    display: block;
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    /* contain: mostra a foto INTEIRA, proporcional e centralizada (igual ao catálogo) */
+    object-fit: contain;
+    object-position: center;
+    background-color: #eceff3;
     border-radius: 5px;
 }
 .produto h3 {
