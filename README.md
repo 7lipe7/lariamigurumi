@@ -5,8 +5,8 @@ Site estático (HTML/CSS/JS puro) publicado na Vercel, integrado ao painel admin
 ## Como funciona
 
 - **`index.html`** — seção "Produtos em destaque" busca na tabela `produtos` (Supabase) os itens marcados com `destaque = true`
-- **`catalago.html`** — catálogo completo (todos os produtos não-esgotados, inclusive os destaques) com busca por nome, filtros por categoria (sidebar) e filtro "⭐ Destaques"
-- Imagens do Supabase Storage são carregadas otimizadas (WebP via transformação do Storage, com fallback para a original)
+- **`catalago.html`** — catálogo completo (todos os produtos não-esgotados, inclusive os destaques) com busca por nome, filtros por categoria (sidebar) e filtro "Destaques"
+- Imagens do Supabase Storage são carregadas na URL original (lazy load com fallback); a conversão WebP automática foi desativada — envie as fotos já comprimidas pelo painel adm
 - Encomendas pelo WhatsApp
 
 ## Configuração
