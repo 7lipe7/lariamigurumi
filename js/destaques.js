@@ -5,7 +5,7 @@ function criarCardDestaque(p) {
     const imagem = p.imagem_url || IMAGEM_PLACEHOLDER;
     return `
         <div class="produto">
-            <img data-src="${escapar(imagem)}" alt="${escapar(p.nome)} amigurumi de crochê" class="lazy" loading="lazy" decoding="async">
+            <img data-src="${escapar(urlImagemOtimizada(imagem))}" data-original="${escapar(imagem)}" alt="${escapar(p.nome)} amigurumi de crochê" class="lazy" loading="lazy" decoding="async">
             <h3>${escapar(p.nome)}</h3>
             <p>${escapar(p.descricao)}</p>
             <div class="price">

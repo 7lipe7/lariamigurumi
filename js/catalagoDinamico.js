@@ -1,5 +1,8 @@
-// Catálogo dinâmico: produtos NÃO-destaque cadastrados no painel adm (Supabase).
-// Depende de js/comum.js (ENV, escapar, formatarPreco, linkWhatsapp, lazy load).
+// Catálogo dinâmico: produtos cadastrados no painel adm (Supabase).
+// Inclui os produtos em destaque — eles ganham um badge e o filtro
+// "Destaques" da sidebar mostra só eles.
+// Depende de js/comum.js (ENV, escapar, formatarPreco, linkWhatsapp, lazy load,
+// urlImagemOtimizada).
 
 // Mapeia as categorias do adm para os filtros da sidebar (data-filtro)
 function classeCategoria(categoria) {
@@ -17,13 +20,15 @@ function criarCard(p) {
     const imagem = p.imagem_url || IMAGEM_PLACEHOLDER;
     const categoria = classeCategoria(p.categoria);
     const badge = p.status === "Sob encomenda" ? '<span class="badge-encomenda">sob encomenda</span>' : "";
+    const badgeDestaque = p.destaque === true ? '<span class="badge-destaque">⭐ destaque</span>' : "";
     return `
-        <div class="card ${categoria}" data-categoria="${categoria}">
-            <img data-src="${escapar(imagem)}" alt="${escapar(p.nome)} amigurumi" class="lazy" loading="lazy" decoding="async">
+        <div class="card ${categoria}" data-categoria="${categoria}" data-destaque="${p.destaque === true}">
+            <img data-src="${escapar(urlImagemOtimizada(imagem))}" data-original="${escapar(imagem)}" alt="${escapar(p.nome)} amigurumi" class="lazy" loading="lazy" decoding="async">
             <div class="desc">
                 <h3>${escapar(p.nome)}</h3> <span class="price">${formatarPreco(p.preco)}</span>
             </div>
             <p>${escapar(p.descricao)}</p>
+            ${badgeDestaque}
             ${badge}
             <a href="${linkWhatsapp(p.nome)}" target="_blank" rel="noopener noreferrer" class="btn">Encomendar</a>
         </div>`;
@@ -44,8 +49,8 @@ async function carregarProdutos() {
 
     try {
         const url = SUPABASE_URL +
-            "/rest/v1/produtos?select=id,nome,descricao,preco,categoria,status,imagem_url" +
-            "&destaque=eq.false&status=neq.Esgotado&order=id.desc";
+            "/rest/v1/produtos?select=id,nome,descricao,preco,categoria,status,imagem_url,destaque" +
+            "&status=neq.Esgotado&order=id.desc";
 
         const resposta = await fetch(url, {
             headers: { apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },

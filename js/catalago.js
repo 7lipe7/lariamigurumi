@@ -34,7 +34,15 @@ function produtoVisivel(card) {
     const nome = normalizar(card.querySelector("h3")?.textContent);
     const categoria = card.dataset.categoria || "";
 
-    const casaCategoria = filtroAtual === "todos" || categoria === filtroAtual;
+    let casaCategoria;
+    if (filtroAtual === "todos") {
+        casaCategoria = true;
+    } else if (filtroAtual === "destaques") {
+        // filtro especial: só produtos marcados como destaque no painel adm
+        casaCategoria = card.dataset.destaque === "true";
+    } else {
+        casaCategoria = categoria === filtroAtual;
+    }
     const casaBusca = !termo || nome.includes(termo);
     return casaCategoria && casaBusca;
 }

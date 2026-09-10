@@ -32,32 +32,63 @@ function linkWhatsapp(nome) {
     return "https://wa.me/" + WHATSAPP_NUMERO + "?text=" + texto;
 }
 
+// ===== Otimização de imagens do Supabase Storage =====
+// As fotos cadastradas no painel adm podem ser bem pesadas (PNGs de vários MB).
+// Reescrevendo para o endpoint de transformação do Storage, o servidor entrega
+// uma versão WebP leve (ex.: 2,3 MB -> 95 KB). URLs de fora do Storage voltam
+// inalteradas; se a transformação falhar, o lazy load cai para a URL original
+// (data-original) automaticamente.
+function urlImagemOtimizada(url) {
+    const original = String(url || "");
+    const marcador = "/storage/v1/object/public/";
+    const index = original.indexOf(marcador);
+    if (index === -1) return original;
+    return original.slice(0, index) + "/storage/v1/render/image/public/" +
+        original.slice(index + marcador.length) +
+        "?width=600&quality=70&format=webp";
+}
+
 // ===== Lazy loading compartilhado =====
 let lazyObserver = null;
 if ("IntersectionObserver" in window) {
+    // rootMargin: começa a carregar um pouco antes da imagem entrar na tela
     lazyObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                const img = entry.target;
-                lazyObserver.unobserve(img);
-                carregarImagemLazy(img);
+                carregarImagemLazy(entry.target);
+                lazyObserver.unobserve(entry.target);
             }
         });
-    });
+    }, { rootMargin: "200px 0px" });
 }
 
 // Define o src e só revela a imagem (classe .loaded) QUANDO ELA TERMINAR
 // de carregar — evita o "flash" de card branco entre o skeleton e a foto.
+// Se a versão otimizada (data-src, WebP) falhar — por exemplo, ao estourar
+// o limite de transformações do plano — cai para a original (data-original).
 function carregarImagemLazy(img) {
-    if (img.dataset.src) img.src = img.dataset.src;
+    if (!img.dataset.src) return;
+    img.src = img.dataset.src;
 
-    if (img.complete && img.naturalWidth > 0) {
-        img.classList.add("loaded");
+    const revelar = () => img.classList.add("loaded");
+
+    const aoFalhar = () => {
+        img.removeEventListener("load", revelar);
+        if (img.dataset.original && img.src !== img.dataset.original) {
+            img.src = img.dataset.original;
+            img.addEventListener("load", revelar, { once: true });
+            img.addEventListener("error", revelar, { once: true });
+        } else {
+            revelar();
+        }
+    };
+
+    if (img.complete) {
+        img.naturalWidth > 0 ? revelar() : aoFalhar();
         return;
     }
-    // revela no load; no erro também revela para não ficar invisível para sempre
-    img.addEventListener("load", () => img.classList.add("loaded"), { once: true });
-    img.addEventListener("error", () => img.classList.add("loaded"), { once: true });
+    img.addEventListener("load", revelar, { once: true });
+    img.addEventListener("error", aoFalhar, { once: true });
 }
 
 // Observa imagens com data-src ainda sem src. Pode ser chamado novamente
