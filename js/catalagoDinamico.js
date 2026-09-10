@@ -19,7 +19,7 @@ function criarCard(p) {
     const badge = p.status === "Sob encomenda" ? '<span class="badge-encomenda">sob encomenda</span>' : "";
     return `
         <div class="card ${categoria}" data-categoria="${categoria}">
-            <img data-src="${escapar(imagem)}" alt="${escapar(p.nome)} amigurumi" class="lazy" loading="lazy">
+            <img data-src="${escapar(imagem)}" alt="${escapar(p.nome)} amigurumi" class="lazy" loading="lazy" decoding="async">
             <div class="desc">
                 <h3>${escapar(p.nome)}</h3> <span class="price">${formatarPreco(p.preco)}</span>
             </div>
@@ -31,6 +31,17 @@ function criarCard(p) {
 
 async function carregarProdutos() {
     if (!CONFIG_OK) return; // sem config: sem catálogo dinâmico
+
+    const main = document.querySelector(".main");
+    if (!main) return;
+
+    // Skeletons: reservam o espaço dos cards enquanto o fetch roda,
+    // evitando página vazia e pulo de layout (CLS)
+    main.insertAdjacentHTML(
+        "afterbegin",
+        Array.from({ length: 6 }, criarSkeletonCard).join("")
+    );
+
     try {
         const url = SUPABASE_URL +
             "/rest/v1/produtos?select=id,nome,descricao,preco,categoria,status,imagem_url" +
@@ -42,8 +53,9 @@ async function carregarProdutos() {
         if (!resposta.ok) throw new Error("HTTP " + resposta.status);
 
         const produtos = await resposta.json();
-        const main = document.querySelector(".main");
-        if (!main) return;
+
+        // remove os skeletons
+        main.querySelectorAll(".skeleton-card").forEach((s) => s.remove());
 
         // remove eventuais cards estáticos antigos, preservando o aviso
         main.querySelectorAll(".card").forEach((card) => card.remove());
@@ -57,8 +69,21 @@ async function carregarProdutos() {
             if (aviso) aviso.style.display = "block";
         }
     } catch (erro) {
+        // remove os skeletons também em caso de erro
+        main.querySelectorAll(".skeleton-card").forEach((s) => s.remove());
         console.warn("Catálogo dinâmico indisponível.", erro);
     }
+}
+
+// Card placeholder com o mesmo formato/medidas dos cards reais
+function criarSkeletonCard() {
+    return `
+        <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton skeleton-img"></div>
+            <div class="skeleton skeleton-line titulo"></div>
+            <div class="skeleton skeleton-line"></div>
+            <div class="skeleton skeleton-btn"></div>
+        </div>`;
 }
 
 document.addEventListener("DOMContentLoaded", carregarProdutos);

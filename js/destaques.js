@@ -5,7 +5,7 @@ function criarCardDestaque(p) {
     const imagem = p.imagem_url || IMAGEM_PLACEHOLDER;
     return `
         <div class="produto">
-            <img data-src="${escapar(imagem)}" alt="${escapar(p.nome)} amigurumi de crochê" class="lazy" loading="lazy">
+            <img data-src="${escapar(imagem)}" alt="${escapar(p.nome)} amigurumi de crochê" class="lazy" loading="lazy" decoding="async">
             <h3>${escapar(p.nome)}</h3>
             <p>${escapar(p.descricao)}</p>
             <div class="price">
@@ -17,6 +17,16 @@ function criarCardDestaque(p) {
 
 async function carregarDestaques() {
     if (!CONFIG_OK) return;
+
+    const container = document.querySelector(".produtos_container");
+    if (!container) return;
+
+    // Skeletons depois do card estático, reservando espaço durante o fetch
+    container.insertAdjacentHTML(
+        "beforeend",
+        Array.from({ length: 3 }, criarSkeletonCard).join("")
+    );
+
     try {
         const url = SUPABASE_URL +
             "/rest/v1/produtos?select=id,nome,descricao,preco,status,imagem_url" +
@@ -28,15 +38,29 @@ async function carregarDestaques() {
         if (!resposta.ok) throw new Error("HTTP " + resposta.status);
 
         const produtos = await resposta.json();
+
+        // remove os skeletons em qualquer caminho (sucesso, vazio ou erro)
+        container.querySelectorAll(".skeleton-card").forEach((s) => s.remove());
+
         if (!Array.isArray(produtos) || produtos.length === 0) return; // mantém os estáticos
 
-        const container = document.querySelector(".produtos_container");
-        if (!container) return;
         container.innerHTML = produtos.map(criarCardDestaque).join("");
         window.observarLazyImagens();
     } catch (erro) {
+        container.querySelectorAll(".skeleton-card").forEach((s) => s.remove());
         console.warn("Destaques dinâmicos indisponíveis, mantendo destaques estáticos.", erro);
     }
+}
+
+// Card placeholder com o mesmo formato/medidas dos cards de destaque
+function criarSkeletonCard() {
+    return `
+        <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton skeleton-img"></div>
+            <div class="skeleton skeleton-line titulo"></div>
+            <div class="skeleton skeleton-line"></div>
+            <div class="skeleton skeleton-btn"></div>
+        </div>`;
 }
 
 document.addEventListener("DOMContentLoaded", carregarDestaques);

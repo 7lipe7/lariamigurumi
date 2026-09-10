@@ -341,6 +341,75 @@ h1 {
     transform: scale(1);
 }
 
+/* ================= SKELETON LOADING ================= */
+/* Cards placeholder exibidos enquanto os produtos carregam do Supabase,
+   evitando página vazia e o pulo de layout (CLS) quando os cards aparecem */
+
+.skeleton-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: clamp(200px, 30%, 300px);
+    padding-bottom: 15px;
+    overflow: hidden;
+}
+
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: #eceff3;
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: shimmer 1.4s infinite;
+}
+
+.skeleton-img {
+    width: 100%;
+    height: 250px;
+    border-radius: 5px 5px 0 0;
+}
+
+.skeleton-line {
+    height: 14px;
+    border-radius: 7px;
+    margin: 14px 16px 0;
+}
+
+.skeleton-line.titulo {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.skeleton-btn {
+    height: 44px;
+    width: 60%;
+    margin: 20px auto 0;
+    border-radius: 5px;
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
+
+/* Respeita usuários que preferem menos animação */
+@media (prefers-reduced-motion: reduce) {
+    .skeleton::after {
+        animation: none;
+    }
+    .lazy,
+    .card,
+    .card .btn {
+        transition: none;
+    }
+}
+
 /* ================= FOOTER ================= */
 
 footer {

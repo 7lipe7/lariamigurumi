@@ -146,6 +146,9 @@ main p {
     border-radius: 50%;
     background-color: #ffcdd269;
     padding: 10px;
+    /* dimensões fixas reservam espaço e evitam pulo de layout (CLS) */
+    width: 50px;
+    height: 50px;
 }
 .card h3 {
     padding: clamp(8px, 2vw, 12px);
@@ -189,8 +192,41 @@ main p {
 }
 .card_contato img{
     width: 50px;
-    height: auto;
+    height: 50px;
     margin-bottom: 10px;
+}
+
+/* ================= SKELETON LOADING (destaques do index) ================= */
+/* Mesmas medidas de .produto, para não haver pulo de layout */
+
+.produtos_container .skeleton-card {
+    flex: 1 1 300px;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: clamp(10px, 2vw, 15px);
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.produtos_container .skeleton-img {
+    height: 200px;
+    border-radius: 5px;
+}
+
+.produtos_container .skeleton-btn {
+    height: 40px;
+}
+
+/* Respeita usuários que preferem menos animação */
+@media (prefers-reduced-motion: reduce) {
+    .skeleton::after {
+        animation: none;
+    }
+    .lazy,
+    .produto,
+    .card .btn {
+        transition: none;
+    }
 }
 
 .cards_contato a {
