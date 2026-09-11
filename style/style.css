@@ -129,7 +129,7 @@ main p {
     width: 100%;
     /* moldura única 3:4, foto inteira centralizada sobre fundo branco (igual ao catálogo) */
     aspect-ratio: 3 / 4;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     background-color: #fff;
     border-radius: 5px;
