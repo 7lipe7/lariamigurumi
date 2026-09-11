@@ -19,6 +19,10 @@
             "headers": [
                 { "key": "Cache-Control", "value": "public, max-age=3600" }
             ]
-        }
+        },
+        {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true
+}
     ]
 }
