@@ -61,7 +61,8 @@
         font-size: clamp(14px, 4vw, 16px);
     }
     .card_contato img {
-        width: 40px;
+        width: 64px;
+        height: 64px;
     }
 .butonn {
         display: flex;
