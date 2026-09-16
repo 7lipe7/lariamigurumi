@@ -32,14 +32,7 @@ function linkWhatsapp(nome) {
     return "https://wa.me/" + WHATSAPP_NUMERO + "?text=" + texto;
 }
 
-// ===== Imagens do catálogo =====
-// A conversão automática para WebP (endpoint de transformação do Supabase
-// Storage, /storage/v1/render/...) foi DESATIVADA: o recurso só existe nos
-// planos pagos do Supabase e quando indisponível deixava as fotos lentas
-// (pedido falho + fallback) ou quebradas.
-// Agora as fotos são carregadas na URL original, direto do Storage.
-// Dica: envie as fotos já redimensionadas (~100–200 KB) no painel adm para
-// o site continuar leve.
+
 function urlImagemOtimizada(url) {
     return String(url || "");
 }

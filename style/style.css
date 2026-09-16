@@ -256,6 +256,28 @@ main p {
     border-radius: 5px;
 }
 
+/* ================= LAZY LOAD ================= */
+/* Mesma lógica do catalago.css: sem opacity: 0 no estado inicial —
+   opacity esconde também o fundo e deixava o card em branco entre o
+   skeleton e a foto. O img sem imagem não pinta nada, então basta o
+   fundo cinza (igual ao skeleton) até a foto chegar. */
+.lazy {
+    background-color: #eceff3;
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+.lazy.loaded {
+    transform: scale(1);
+    background-color: #fff;
+    animation: foto-aparece 0.3s ease;
+}
+
+@keyframes foto-aparece {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 /* Respeita usuários que preferem menos animação */
 @media (prefers-reduced-motion: reduce) {
     .skeleton::after {
@@ -265,6 +287,9 @@ main p {
     .produto,
     .card .btn {
         transition: none;
+    }
+    .lazy.loaded {
+        animation: none;
     }
 }
 

@@ -335,21 +335,36 @@ h1 {
 }
 
 /* ================= LAZY LOAD ================= */
-
+/* Enquanto a foto não chega do Storage, o img NÃO usa opacity: 0:
+   opacity esconde também o fundo, e era isso que deixava o card
+   "em branco" entre o skeleton e a foto. Um img sem imagem carregada
+   não pinta conteúdo nenhum, então basta deixar o fundo cinza visível
+   (igual ao skeleton) e animar a entrada da foto quando ela terminar. */
 .lazy {
-    opacity: 0;
-    transform: scale(1.02);
-    /* fundo igual ao skeleton: sem "flash" branco enquanto a foto baixa */
+    /* fundo igual ao skeleton: placeholder cinza enquanto a foto baixa */
     background-color: #eceff3;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
 }
 
 .lazy.loaded {
-    opacity: 1;
     transform: scale(1);
     /* depois de carregada, o fundo vira branco: com fotos contidas (contain),
        as bordas somem no card em vez de aparecer como barras cinzas */
     background-color: #fff;
+    /* fade só na hora em que a foto aparece (rápido, ~300ms) */
+    animation: foto-aparece 0.3s ease;
+}
+
+@keyframes foto-aparece {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lazy.loaded {
+        animation: none;
+    }
 }
 
 /* ================= SKELETON LOADING ================= */
