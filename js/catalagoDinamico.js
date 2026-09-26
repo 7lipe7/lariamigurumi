@@ -23,7 +23,7 @@ function criarCard(p) {
     const badgeDestaque = p.destaque === true ? '<span class="badge-destaque">⭐ destaque</span>' : "";
     return `
         <div class="card ${categoria}" data-categoria="${categoria}" data-destaque="${p.destaque === true}">
-            <img data-src="${escapar(urlImagemOtimizada(imagem))}" data-original="${escapar(imagem)}" alt="${escapar(p.nome)} amigurumi" class="lazy" loading="lazy" decoding="async">
+            <img data-src="${escapar(urlImagemOtimizada(imagem))}" data-original="${escapar(urlImagemOtimizada(imagem))}" alt="${escapar(p.nome)} amigurumi" class="lazy" loading="lazy" decoding="async">
             <div class="desc">
                 <h3>${escapar(p.nome)}</h3> <span class="price">${formatarPreco(p.preco)}</span>
             </div>

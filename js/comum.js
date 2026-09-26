@@ -33,8 +33,24 @@ function linkWhatsapp(nome) {
 }
 
 
+// Só aceita imagens https vindas do próprio Supabase Storage. Qualquer outro
+// esquema/host (javascript:, data:, servidor externo) cai no placeholder — o
+// CSP já bloquearia, mas validando aqui a camada de defesa é explícita.
+const HOST_ARMAZENAMENTO = (() => {
+    if (!SUPABASE_URL) return null;
+    try { return new URL(SUPABASE_URL).host; } catch { return null; }
+})();
+
 function urlImagemOtimizada(url) {
-    return String(url || "");
+    const bruto = String(url || "").trim();
+    if (!bruto || !/^https:\/\//i.test(bruto)) return IMAGEM_PLACEHOLDER;
+    try {
+        const alvo = new URL(bruto);
+        if (HOST_ARMAZENAMENTO && alvo.host !== HOST_ARMAZENAMENTO) return IMAGEM_PLACEHOLDER;
+        return alvo.href;
+    } catch {
+        return IMAGEM_PLACEHOLDER;
+    }
 }
 
 // ===== Lazy loading compartilhado =====
