@@ -52,4 +52,5 @@ dados é feita pelas policies de RLS no banco.
 - `js/destaques.js` — destaques do index
 - `js/catalagoDinamico.js` — cards do catálogo
 - `js/catalago.js` — sidebar, filtros e busca
+- `js/lightbox.js` — visualização das fotos em tela cheia (swipe, setas e teclado)
 
