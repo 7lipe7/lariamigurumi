@@ -31,15 +31,24 @@ dados é feita pelas policies de RLS no banco.
   protege os dados são as policies.
 - **CSP com nonce (`vercel.json`):** o nonce `9ec928a622fad4653d777d562103854f`
   é aplicado em **todas** as tags `<script>` de `index.html` e `catalago.html`,
-  com `'strict-dynamic'`. Em navegadores modernos (CSP3) o `'unsafe-inline'` é
-  ignorado, então um `<script>` injetado não executa.
+  com `'strict-dynamic'` e **sem** `'unsafe-inline'` em `script-src`.
   - ⚠️ **Ao adicionar, remover ou alterar qualquer tag `<script>`**, inclua
     `nonce="9ec928a622fad4653d777d562103854f"` — sem isso o script é bloqueado
     pelo CSP. O mesmo valor está em `script-src` no `vercel.json`; se trocar o
-    nonce, troque nos dois lugares.
-  - Limitação conhecida: por ser um site estático, o nonce não é gerado por
-    requisição. Ele é melhor que `'unsafe-inline'` puro, mas não é tão forte
-    quanto um nonce dinâmico (que exigiria SSR/Edge Middleware).
+    nonce, troque nos dois lugares. O mesmo vale para handlers `onclick=` etc.
+    inline (não existem hoje — mantenha assim).
+  - Limitações conhecidas: por ser um site estático, o nonce não é gerado por
+    requisição (isso exigiria SSR/Edge Middleware), e `style-src` mantém
+    `'unsafe-inline'` porque o lightbox anima via `element.style.*`.
+- **Cabeçalhos de segurança (`vercel.json`):** aplicados em `/(.*)` —
+  HSTS, CSP, `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`,
+  `Permissions-Policy`, `X-Permitted-Cross-Domain-Policies`, `Cross-Origin-Opener-Policy`,
+  `Cross-Origin-Resource-Policy` e `Cross-Origin-Embedder-Policy: credentialless`
+  (o `credentialless` em vez de `require-corp` é o que permite carregar as
+  imagens do Supabase e o GA sem quebrar).
+  - Nota: o redirect `308` de `/catalago.html` → `/catalogo` (gerado pelo
+    `cleanUrls` da Vercel) **não** carrega esses cabeçalhos — é um redirect
+    automático da plataforma, não fica coberto pelo bloco `headers`.
 - **XSS:** todo dado vindo do Supabase passa por `escapar()` antes de ir para o
   HTML, e `urlImagemOtimizada()` só aceita `https://` do host do próprio
   Supabase Storage (qualquer outro esquema/host vira o placeholder).
